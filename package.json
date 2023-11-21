@@ -1,0 +1,28 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "axios": "1.2.1",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "scripts": {
+    "intro": "cat package.json | jq .scripts",
+    "preintro": "npm install",
+    "test:consumer": "node runConsumerTest.js",
+    "test:provider": "node runProviderTest.js",
+    "pact:publish": "./publish.sh",
+    "pact:show": "cat pacts/GettingStartedOrderWeb-GettingStartedOrderApi.json | jq .",
+    "test": "cross-env PACT_URL=$PWD/pacts/GettingStartedOrderWeb-GettingStartedOrderApi.json npm run test:consumer && npm run test:provider",
+    "test:broker": "cross-env PACT_BROKER_BASE_URL=https://pactbroker.$REPL_OWNER.repl.co npm run test:consumer && npm run pact:publish && npm run test:provider",
+    "get:broker": "echo 'fork a copy of https://replit.com/@pact/pactbroker and run npm test:broker when it has started'"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "@pact-foundation/pact": "12.1.0",
+    "mocha": "^10.2.0",
+    "superagent": "^8.0.6",
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1"
+  }
+}
